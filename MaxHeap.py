@@ -25,41 +25,29 @@ class MaxHeap(object):
         return i * 2 + 1
 
     def inorder(self, i):
-
-        if (self.heapArray[i] != None):  # If heapArray is not empty,
-            # If left subtree exists,
-            if(self.heapArray[self.left(i)] != None):
-                self.inorder(self.left(i))
-
-            self.inorderArray.append(self.heapArray[i])  # Append node itself
-
-            if (self.heapArray[self.right(i)] != None):
-            # If right subtree exists,
-                self.inorder(self.right(i))
-
-            self.inorderArray.append(self.heapArray[i])  # Append node itself
+        print(self.heapArray)
 
     def __str__(self):
         self.inorder(0)  # Build inorder list
         return str(self.inorderArray)
 
+    def swap(self, l, r):
+        temp = self.heapArray[l]
+        self.heapArray[l] = self.heapArray[r]
+        self.heapArray[r] = temp
 
     def heaparray(self):
         # Make heap array
-        for n in lst:
+        for n in self.lst:
             self.heapArray.append(n)
 
             i = len(self.heapArray) - 1  # Last index
-            while i > 1:   # root로 올때까지 부모와 비교하며 더 작으면 바꿔주고 반복한다.
+            while i > 1:
                 parent = int(i/2)
-
                 if self.heapArray[i] < self.heapArray[parent]:
-                    temp = self.heapArray[i]
-                    self.heapArray[i] = self.heapArray[parent]
-                    self.heapArray[parent] = temp
-
+                    self.swap(i, parent)
                     i = parent
-                else:  # 만약 부모가 더 작으면 거기서 끝.
+                else:
                     break
 
         return self.heapArray
@@ -90,7 +78,17 @@ class MaxHeap(object):
         print(maxheap.heapsort())
 
 
-lst = [5, 3, 1, 4, 2]
+
+# listin = [15, 35, 65, 20, 17, 80, 12, 45, 2, 4]
+# m = MaxHeap(listin)
+# print(m)
+
+# print("    before: ", listin)
+# print("Heapsorted: ", m.Heapshort())
+#
+#
+#
+lst = [20,12,35,15,10,80,30,17,2,1]
 h = MaxHeap(lst)
 print(h)
-# heapsort(h)
+# # heapsort(h)
