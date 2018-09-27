@@ -13,6 +13,9 @@ class MaxHeap:
             self.__floatUp(len(self.heap) - 1)
             # 마지막에 더한다음에는 항상 자신의 부모와 바꾸어야 하는지 검토 교과서 Page 38
 
+        print(self.heap)
+
+
     def push(self, data):
         self.heap.append(data)
         self.__floatUp(len(self.heap) - 1)
