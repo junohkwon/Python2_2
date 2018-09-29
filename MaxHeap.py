@@ -7,13 +7,15 @@ import queue
 
 class MaxHeap(object):
 
+
     # maxheap initialization
     def __init__(self, lst):
         self.heapArray = [None]
         self.inorderArray = []
         self.heaparray(lst)
-        # self.pq = PriorityQueue()
+        self.pq = queue.PriorityQueue()
         # You can add additional code here
+
 
     def left(self, i):
         # Go to left subtree and return index
@@ -27,20 +29,16 @@ class MaxHeap(object):
         print(self.heapArray)
 
     def inorderTraversal(self, i):
-        # print('this is i : ', i, end='\n')
-        # print('this is len : ', len(self.heapArray)-1)
-        res = []
-        if len(self.heapArray)-1 > i and self.heapArray is not None:
-            res = self.inorderTraversal(self.left(i))
-            res.append(self.heapArray[i])
-            res = res + self.inorderTraversal(self.right(i))
+        if len(self.heapArray) > i:
+            self.inorderTraversal(self.left(i))
+            print(self.heapArray[i])
+            self.inorderTraversal(self.right(i))
         else:
-            return res
-
+            return
 
     def __str__(self):
-        #self.inorderTraversal(1)
-        #self.inorder(1)  # Build inorder list
+        self.inorderTraversal(1)
+        self.inorder(1)  # Build inorder list
         return str(self.inorderArray)
 
     def swap(self, l, r):
@@ -48,9 +46,10 @@ class MaxHeap(object):
 
     def heaparray(self,lst):
         # Make heap array
+        self.pq = queue.PriorityQueue()
         for n in lst:
             self.heapArray.append(n)
-            self.moveup(len(self.heapArray) - 1)
+            self.moveup_v2(len(self.heapArray) - 1)
 
     def moveup(self, index):
         parent = index // 2
@@ -59,6 +58,19 @@ class MaxHeap(object):
         elif self.heapArray[index] > self.heapArray[parent]:
             self.swap(index, parent)
             self.moveup(parent)
+
+    def moveup_v2(self, index):
+        parent = index // 2
+        if index <= 1:
+            return
+        else:
+            self.enqueue(self.heapArray[index])
+            self.enqueue(self.heapArray[parent])
+
+            self.heapArray[index] = self.dequeue()
+            self.heapArray[parent] = self.dequeue()
+
+            self.moveup_v2(parent)
 
     def movedown(self, index):
         left = self.left(index)
@@ -107,18 +119,26 @@ class MaxHeap(object):
 
         return ls
 
-    # while not self.pq.empty():
-    #     # dequeue one element
-    #     # add to ls
-    #     return str(ls)
+    def heapsort_v2(self):
+
+        for data in self.heapArray:
+            if data is not None:
+                self.pq.put(-1*data)
+
+        ls= []
+        while not self.pq.empty():
+            data = self.pq.get()
+            ls.append(-1*data)
+        return str(ls)
+
 
     def enqueue(self, a):
-        # Fill here
+        self.pq.put(a)
         pass
 
     def dequeue(self):
-        # Fill here
-        pass
+        return self.pq.get()
+
 
     # isEmpty function의 반대
     def isNotEmpty(self):
@@ -132,12 +152,11 @@ class MaxHeap(object):
 
 
 
-listin = [15, 35, 65, 20, 17, 80, 12, 45, 2, 4]
+listin = [20,12,35,15,10,80,30,17,2,1]
 m = MaxHeap(listin)
-print('MaxHeap : ',m)
+#print('MaxHeap : ', m)
+print(m.heapsort_v2())
 #print('Sorted : ', m.heapsort())
-res = m.inorderTraversal(1)
-print('this is res : ', res)
 # print("    before: ", listin)
 # print("Heapsorted: ", m.Heapshort())
 #
