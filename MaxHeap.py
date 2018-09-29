@@ -29,16 +29,17 @@ class MaxHeap(object):
         print(self.heapArray)
 
     def inorderTraversal(self, i):
+        ls = []
+
         if len(self.heapArray) > i:
-            self.inorderTraversal(self.left(i))
-            print(self.heapArray[i])
-            self.inorderTraversal(self.right(i))
-        else:
-            return
+            ls = self.inorderTraversal(self.left(i))
+            ls.append(self.heapArray[i])
+            ls = ls + self.inorderTraversal(self.right(i))
+
+        return ls
 
     def __str__(self):
-        self.inorderTraversal(1)
-        self.inorder(1)  # Build inorder list
+        print('this is inorder traversal - ',self.inorderTraversal(1))
         return str(self.inorderArray)
 
     def swap(self, l, r):
@@ -154,8 +155,11 @@ class MaxHeap(object):
 
 listin = [20,12,35,15,10,80,30,17,2,1]
 m = MaxHeap(listin)
-#print('MaxHeap : ', m)
-print(m.heapsort_v2())
+print('MaxHeap : ', m.heapArray)
+print('InOrder Traversal : ', m)
+print('Sorted V2 : ', m.heapsort_v2())
+print('Sorted V1 : ', m.heapsort())
+
 #print('Sorted : ', m.heapsort())
 # print("    before: ", listin)
 # print("Heapsorted: ", m.Heapshort())
